@@ -14,6 +14,22 @@ A Chrome extension for signing events and posting status updates (NIP-38) / text
 - **Fallback Relays**: Automatically queries multiple relays for metadata
 - **NIP-07 Support**: Allows websites to request signatures via the standard Nostr interface
 
+## Screen Shots
+
+Post Note
+![Post Note](screenshots/PostNote.png)
+
+Status Update
+![Status Update](screenshots/StatusUpdate.png)
+
+Signing History
+![Signing History](screenshots/SigningHistory.png)
+
+Relay Config
+![Relay Config](screenshots/RelayConfig.png)
+
+CustomThemes
+![Custom Themes](screenshots/CustomThemes.png)
 
 ## Installation
 
