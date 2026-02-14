@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Profile Header -->
+    <div id="profile-header" class="profile-header" style="display: none;">
+      <div class="profile-info">
+        <img id="profile-picture" class="profile-picture" src="" alt="">
+        <div class="profile-details">
+          <div id="profile-name" class="profile-name"></div>
+          <div id="profile-npub" class="profile-npub"></div>
+        </div>
+      </div>
+      
+      <button id="settings-btn" class="icon-btn" title="Settings">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#4a4a4a"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.5213 3.62368C11.3147 2.75255 12.6853 2.75255 13.4787 3.62368L14.2142 4.43128C14.6151 4.87154 15.1914 5.11025 15.7862 5.08245L16.8774 5.03146C18.0543 4.97645 19.0236 5.94568 18.9685 7.12264L18.9176 8.21377C18.8898 8.80859 19.1285 9.38487 19.5687 9.78582L20.3763 10.5213C21.2475 11.3147 21.2475 12.6853 20.3763 13.4787L19.5687 14.2142C19.1285 14.6151 18.8898 15.1914 18.9176 15.7862L18.9685 16.8774C19.0236 18.0543 18.0543 19.0236 16.8774 18.9685L15.7862 18.9176C15.1914 18.8898 14.6151 19.1285 14.2142 19.5687L13.4787 20.3763C12.6853 21.2475 11.3147 21.2475 10.5213 20.3763L9.78582 19.5687C9.38487 19.1285 8.80859 18.8898 8.21376 18.9176L7.12264 18.9685C5.94568 19.0236 4.97645 18.0543 5.03146 16.8774L5.08245 15.7862C5.11025 15.1914 4.87154 14.6151 4.43128 14.2142L3.62368 13.4787C2.75255 12.6853 2.75255 11.3147 3.62368 10.5213L4.43128 9.78582C4.87154 9.38487 5.11025 8.80859 5.08245 8.21376L5.03146 7.12264C4.97645 5.94568 5.94568 4.97645 7.12264 5.03146L8.21376 5.08245C8.80859 5.11025 9.38487 4.87154 9.78583 4.43128L10.5213 3.62368Z" stroke="#333333" stroke-width="2"></path> <circle cx="12" cy="12" r="3" stroke="#333333" stroke-width="2"></circle> </g></svg>
+      </button>
+    </div>
+
+    <!-- Not Logged In State -->
+    <div id="not-logged-in" class="not-logged-in">
+      <img src="../icons/nostrich-cropped.jpg" class="logo-image">
+      <p class="welcomemessage">Welcome to Postr</p>
+      <p class="subtitle">A signing and posting/status extension</p>
+      <div class="hr2"> </div>
+      <button id="login-btn" class="btn-primary">Login with NSEC</button>
+    </div>
+
+    <!-- Main Content (Logged In) -->
+    <div id="main-content" class="main-content" style="display: none;">
+      <!-- Mode Toggle -->
+      <div class="mode-toggle">
+        <button id="mode-status" class="mode-btn active">Status</button>
+        <button id="mode-text" class="mode-btn">Note</button>
+      </div>
+
+      <!-- Status Mode -->
+      <div id="status-mode" class="mode-content">
+        <div class="input-row">
+          <button id="status-emoji-btn" class="emoji-toggle-btn" title="Add emoji">😊</button>
+          <input 
+            type="text" 
+            id="status-input" 
+            class="status-input" 
+            placeholder="What's your status?"
+            maxlength="100"
+          >
+        </div>
+        <div id="status-emoji-picker" class="emoji-picker-container"></div>
+        
+        <div id="current-status" class="current-status" style="display: none;">
+          <div class="status-label">Current Status</div>
+          <div id="status-content" class="status-content"></div>
+          <div id="status-timer" class="status-timer"></div>
+        </div>
+        
+        <button id="post-status-btn" class="btn-primary btn-full">Post Status</button>
+      </div>
+
+      <!-- Text Mode -->
+      <div id="text-mode" class="mode-content" style="display: none;">
+        <div class="text-input-container">
+          <textarea 
+            id="text-input" 
+            class="text-input" 
+            placeholder="What's on your mind?"
+            rows="4"
+          ></textarea>
+          <div class="text-toolbar">
+            <button id="text-emoji-btn" class="emoji-toggle-btn" title="Add emoji">😊</button>
+            <span id="char-count" class="char-count">280</span>
+          </div>
+        </div>
+        <div id="text-emoji-picker" class="emoji-picker-container"></div>
+        
+        <div class="url-attachment-section">
+          <label class="url-checkbox-label">
+            <input type="checkbox" id="attach-url-checkbox" class="url-checkbox">
+            <span>Attach current page URL</span>
+          </label>
+          <div id="url-preview" class="url-preview" style="display: none;">
+            <div class="url-preview-label">Preview:</div>
+            <div id="url-preview-content" class="url-preview-content"></div>
+          </div>
+        </div>
+        
+        <button id="post-text-btn" class="btn-primary btn-full">Post Note</button>
+      </div>
+
+      <!-- Message Area -->
+      <div id="message-area" class="message-area"></div>
+    </div>
+
+    <!-- Site Status Footer (pinned to bottom) -->
+    <div id="site-status" class="site-status" style="display: none;">
+      <div class="site-status-row">
+        <button id="site-revoke-btn" class="site-revoke-btn" style="display: none;">Revoke</button>
+        <span id="site-domain" class="site-domain"></span>
+        <span id="site-permission" class="site-permission"></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/nostr-tools.js"></script>
+  <script src="../shared/storage.js"></script>
+  <script src="../shared/relay-manager.js"></script>
+  <script src="../shared/nostr-client.js"></script>
+  <script src="../shared/emoji-picker.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

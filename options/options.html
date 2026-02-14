@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Postr Settings</title>
+  <link rel="stylesheet" href="options.css?v=2">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Postr Settings</h1>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="account">Account</button>
+      <button class="tab-btn" data-tab="relays">Relays</button>
+      <button class="tab-btn" data-tab="permissions">Site Permissions</button>
+      <button class="tab-btn" data-tab="history">Signing History</button>
+      <button class="tab-btn" data-tab="notifications">Notifications</button>
+      <button class="tab-btn" data-tab="theme">Theme</button>
+    </nav>
+
+    <!-- Account Tab -->
+    <section id="account" class="tab-content active">
+      <h2>Account</h2>
+
+      <div id="account-not-logged" class="account-section">
+        <p>Login with your Nostr private key to get started.</p>
+        <div class="form-group">
+          <label for="nsec-input">NSEC (Private Key)</label>
+          <input type="password" id="nsec-input" placeholder="nsec1...">
+          <small>Your private key is stored securely in the extension.</small>
+        </div>
+        <button id="login-btn" class="btn-primary">Login</button>
+      </div>
+
+      <div id="account-logged" class="account-section" style="display: none;">
+        <div class="profile-display">
+          <img id="profile-picture" class="profile-picture" src="" alt="">
+          <div class="profile-info">
+            <div id="profile-name" class="profile-name"></div>
+            <div id="profile-npub" class="profile-npub"></div>
+          </div>
+        </div>
+
+        <div class="nsec-display">
+          <label>Private Key</label>
+          <div class="nsec-row">
+            <input type="password" id="nsec-display" readonly>
+            <button id="toggle-nsec-btn" class="btn-secondary">Show</button>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button id="refresh-metadata-btn" class="btn-secondary">Refresh Profile</button>
+          <button id="logout-btn" class="btn-danger">Logout</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Relays Tab -->
+    <section id="relays" class="tab-content">
+      <h2>Relays</h2>
+      <p class="section-desc">Manage which relays to publish your posts to.</p>
+      
+      <div class="add-relay">
+        <input type="text" id="new-relay-input" placeholder="wss://relay.example.com">
+        <button id="add-relay-btn" class="btn-secondary">Add Relay</button>
+      </div>
+
+      <div id="relay-list"></div>
+
+    </section>
+
+    <!-- Site Permissions Tab -->
+    <section id="permissions" class="tab-content">
+      <h2>Site Permissions</h2>
+      <p class="section-desc">Manage which sites can auto-sign events.</p>
+
+      <div id="permissions-list" class="permissions-list">
+        <p class="empty-state">No sites have been granted permission yet.</p>
+      </div>
+
+      <div class="button-row" style="margin-top: 20px;">
+        <button id="clear-all-permissions-btn" class="btn-danger">Clear All Permissions</button>
+      </div>
+    </section>
+
+    <!-- Signing History Tab -->
+    <section id="history" class="tab-content">
+      <h2>Signing History</h2>
+      <p class="section-desc">View events that have been signed through the extension.</p>
+
+      <div id="history-list" class="history-list">
+        <p class="empty-state">No signing history yet.</p>
+      </div>
+
+      <div class="button-row" style="margin-top: 20px;">
+        <button id="clear-history-btn" class="btn-danger">Clear History</button>
+        <button id="export-history-btn" class="btn-secondary">Export JSON</button>
+      </div>
+    </section>
+
+    <!-- Notifications Tab -->
+    <section id="notifications" class="tab-content">
+      <h2>Notifications</h2>
+      <p class="section-desc">Configure notification preferences for the NIP-07 signer.</p>
+
+      <div class="notification-settings">
+        <div class="setting-item">
+          <label class="setting-label">
+            <input type="checkbox" id="show-auto-sign-notifications" checked>
+            <span>Show notification when auto-signing for whitelisted sites</span>
+          </label>
+          <small>Display a toast notification when events are automatically signed for permitted sites.</small>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">
+            <input type="checkbox" id="enable-signing-history" checked>
+            <span>Log signing activity</span>
+          </label>
+          <small>Keep a record of all signed events in the Signing History tab.</small>
+        </div>
+      </div>
+
+      <div class="button-row" style="margin-top: 20px;">
+        <button id="save-notification-settings-btn" class="btn-primary">Save Settings</button>
+      </div>
+    </section>
+
+    <!-- Theme Tab -->
+    <section id="theme" class="tab-content">
+      <h2>Theme</h2>
+      <p class="section-desc">Customize the extension colors.</p>
+
+      <div class="theme-colors">
+        <div class="color-picker">
+          <label for="primary-color">Primary</label>
+          <input type="color" id="primary-color" value="#6366f1">
+        </div>
+        <div class="color-picker">
+          <label for="background-color">Background</label>
+          <input type="color" id="background-color" value="#ffffff">
+        </div>
+        <div class="color-picker">
+          <label for="text-color">Text</label>
+          <input type="color" id="text-color" value="#1f2937">
+        </div>
+        <div class="color-picker">
+          <label for="accent-color">Accent</label>
+          <input type="color" id="accent-color" value="#f3f4f6">
+        </div>
+      </div>
+
+      <div class="theme-actions">
+        <button id="reset-theme-btn" class="btn-secondary">Reset to Default</button>
+        <button id="save-theme-btn" class="btn-primary">Save Theme</button>
+      </div>
+
+      <div class="theme-json-section">
+        <label>Theme JSON</label>
+        <textarea id="theme-json" class="theme-json" rows="2" placeholder="{primary:&quot;#6366f1&quot;,background:&quot;#ffffff&quot;,text:&quot;#1f2937&quot;,accent:&quot;#f3f4f6&quot;}"></textarea>
+        <div class="theme-json-actions">
+          <button id="copy-theme-btn" class="btn-secondary">Copy JSON</button>
+          <button id="paste-theme-btn" class="btn-secondary">Paste</button>
+          <button id="import-theme-btn" class="btn-primary">Import Theme</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Message Area -->
+    <div id="message-area"></div>
+  </div>
+
+  <script src="../shared/nostr-tools.js"></script>
+  <script src="../shared/storage.js"></script>
+  <script src="../shared/relay-manager.js"></script>
+  <script src="../shared/nostr-client.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
